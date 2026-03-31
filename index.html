@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海新闻档案馆 — Shanghai News Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1008;
+    --paper: #f2e8d5;
+    --paper-dark: #e8d9bc;
+    --paper-aged: #d4c49a;
+    --red: #8b1a1a;
+    --gold: #b8892a;
+    --sepia: #6b4f2a;
+    --faded: #9a8060;
+    --rule: #c4a96a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Aged paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.4;
+  }
+
+  /* Vignette */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(80,40,10,0.25) 100%);
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    border-bottom: 3px double var(--rule);
+    padding: 0 40px;
+    background: var(--paper);
+    position: relative;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 18px 0 6px;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--faded);
+  }
+
+  .masthead-title {
+    text-align: center;
+    padding: 20px 0 10px;
+  }
+
+  .title-en {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .title-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(14px, 2.5vw, 22px);
+    letter-spacing: 0.5em;
+    color: var(--sepia);
+    display: block;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .title-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px auto 0;
+    max-width: 600px;
+  }
+
+  .title-rule span {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .title-rule em {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--gold);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .masthead-meta {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 8px 0 14px;
+    font-family: 'Special Elite', cursive;
+    font-size: 10.5px;
+    color: var(--faded);
+    letter-spacing: 0.1em;
+  }
+
+  .masthead-meta .right { text-align: right; }
+  .masthead-meta .center {
+    text-align: center;
+    font-size: 13px;
+    color: var(--red);
+    font-weight: bold;
+    letter-spacing: 0.2em;
+  }
+
+  /* ── SEARCH SECTION ── */
+  .search-section {
+    max-width: 860px;
+    margin: 48px auto 0;
+    padding: 0 40px;
+    text-align: center;
+  }
+
+  .search-label {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--sepia);
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .search-box-wrap {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    background: #faf4e6;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .search-box-wrap::before {
+    content: '⚲';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+    font-size: 20px;
+    color: var(--faded);
+    pointer-events: none;
+  }
+
+  #search-input {
+    flex: 1;
+    padding: 14px 14px 14px 46px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    outline: none;
+    letter-spacing: 0.05em;
+  }
+
+  #search-input::placeholder {
+    color: var(--faded);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  #search-btn {
+    padding: 14px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Special Elite', cursive;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-transform: uppercase;
+  }
+
+  #search-btn:hover {
+    background: var(--red);
+  }
+
+  .search-hint {
+    margin-top: 12px;
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.12em;
+  }
+
+  .search-hint strong {
+    color: var(--sepia);
+  }
+
+  /* ── DIVIDER ── */
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 860px;
+    margin: 40px auto 0;
+    padding: 0 40px;
+  }
+
+  .section-rule::before,
+  .section-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-rule span {
+    padding: 0 16px;
+    font-family: 'IM Fell English', serif;
+    font-size: 18px;
+    color: var(--rule);
+  }
+
+  /* ── RESULTS ── */
+  #results-section {
+    max-width: 860px;
+    margin: 32px auto 60px;
+    padding: 0 40px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  #results-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .results-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .results-header h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: 18px;
+    color: var(--sepia);
+    font-weight: normal;
+    letter-spacing: 0.05em;
+  }
+
+  .results-count {
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.12em;
+  }
+
+  /* ── RESULT CARD (newspaper clipping style) ── */
+  .result-card {
+    background: #faf4e6;
+    border: 1px solid var(--paper-aged);
+    border-top: 4px solid var(--ink);
+    margin-bottom: 28px;
+    position: relative;
+    box-shadow: 3px 3px 12px rgba(80,40,10,0.12);
+    overflow: hidden;
+    animation: clipIn 0.4s ease both;
+  }
+
+  @keyframes clipIn {
+    from { opacity: 0; transform: translateY(12px) rotate(-0.3deg); }
+    to   { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
+
+  /* Torn edge top effect */
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0; right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 6px,
+      rgba(200,180,140,0.3) 6px, rgba(200,180,140,0.3) 7px
+    );
+  }
+
+  .card-inner {
+    padding: 28px 32px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-start: start;
+  }
+
+  .card-category {
+    display: inline-block;
+    font-family: 'Special Elite', cursive;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--red);
+    padding: 3px 10px;
+    margin-bottom: 10px;
+  }
+
+  .card-date {
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 10px;
+    font-weight: normal;
+  }
+
+  .card-title-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--sepia);
+    margin-bottom: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .card-excerpt {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--sepia);
+    position: relative;
+    padding-left: 14px;
+    border-left: 2px solid var(--rule);
+    font-style: italic;
+  }
+
+  .card-meta-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .card-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--faded);
+    border: 1px solid var(--paper-aged);
+    padding: 2px 8px;
+  }
+
+  /* Right column: archive info + download */
+  .card-sidebar {
+    min-width: 160px;
+    text-align: center;
+    border-left: 1px dashed var(--rule);
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .archive-stamp {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    opacity: 0.7;
+  }
+
+  .archive-stamp::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--red);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .archive-stamp .stamp-text {
+    font-family: 'Special Elite', cursive;
+    font-size: 7.5px;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-align: center;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .archive-stamp .stamp-year {
+    font-family: 'IM Fell English', serif;
+    font-size: 16px;
+    color: var(--red);
+    font-weight: bold;
+  }
+
+  .card-archive-id {
+    font-family: 'Special Elite', cursive;
+    font-size: 10px;
+    color: var(--faded);
+    letter-spacing: 0.1em;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .download-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .download-btn:hover { background: var(--red); }
+
+  .download-btn::before {
+    content: '↓';
+    font-size: 20px;
+    display: block;
+    font-family: serif;
+  }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    border: 1px dashed var(--rule);
+    background: rgba(180,150,100,0.05);
+  }
+
+  .no-results .nr-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .no-results p {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--faded);
+  }
+
+  .no-results small {
+    display: block;
+    margin-top: 8px;
+    font-family: 'Special Elite', cursive;
+    font-size: 11px;
+    color: var(--paper-aged);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── BROWSE SECTION ── */
+  .browse-section {
+    max-width: 860px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+  }
+
+  .browse-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 14px;
+    color: var(--sepia);
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .topic-chip {
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    color: var(--sepia);
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, color 0.15s;
+    line-height: 1.5;
+  }
+
+  .topic-chip:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .topic-chip small {
+    display: block;
+    font-family: 'Special Elite', cursive;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--faded);
+    margin-top: 2px;
+  }
+
+  .topic-chip:hover small { color: var(--paper-aged); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 3px double var(--rule);
+    padding: 20px 40px;
+    text-align: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 10px;
+    color: var(--faded);
+    letter-spacing: 0.12em;
+    margin-top: 40px;
+    line-height: 2;
+  }
+
+  /* Highlight matched text */
+  mark {
+    background: rgba(184,137,42,0.25);
+    color: var(--ink);
+    border-bottom: 1px solid var(--gold);
+    padding: 0 1px;
+  }
+
+  /* responsive */
+  @media (max-width: 600px) {
+    .masthead, .search-section, .browse-section, #results-section { padding: 0 18px; }
+    .card-inner { grid-template-columns: 1fr; }
+    .card-sidebar { border-left: none; border-top: 1px dashed var(--rule); padding-left: 0; padding-top: 16px; flex-direction: row; justify-content: space-around; }
+    .masthead-top { flex-direction: column; gap: 4px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ── -->
+<header class="masthead">
+  <div class="masthead-top">
+    <span>FONDÉE EN 1872 · 创立于同治十一年</span>
+    <span>ARCHIVES PUBLIQUES · 公共档案馆</span>
+    <span>SHANGHAI · 上海</span>
+  </div>
+
+  <div class="masthead-title">
+    <span class="title-en">Shanghai News Archive</span>
+    <span class="title-zh">上 海 新 闻 档 案 馆</span>
+    <div class="title-rule">
+      <span></span>
+      <em>Preserving the Memory of a City · 守护城市的记忆</em>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="masthead-meta">
+    <span>典藏文献 · 民国至今</span>
+    <span class="center">◆ 机密档案 · 按需查阅 ◆</span>
+    <span class="right">档案编号 SHA-1872-∞</span>
+  </div>
+</header>
+
+<!-- ── SEARCH ── -->
+<section class="search-section">
+  <span class="search-label">— 请输入关键词查阅档案 · Enter a keyword to search the archive —</span>
+  <div class="search-box-wrap">
+    <input
+      id="search-input"
+      type="text"
+      placeholder="人名、事件、地点、年份……"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button id="search-btn" onclick="doSearch()">查阅</button>
+  </div>
+  <p class="search-hint">
+    试试搜索：<strong>陆敷之</strong>、<strong>热气球</strong>、<strong>外滩</strong>、<strong>商业互助联合工会</strong>、<strong>杨晓娥</strong>
+  </p>
+</section>
+
+<!-- ── BROWSE TOPICS ── -->
+<div class="section-rule"><span>❧</span></div>
+<section class="browse-section" id="browse-section">
+  <p class="browse-title">— 历史记录 Recent Searches —</p>
+  <div class="topic-grid" id="topic-grid"></div>
+</section>
+
+<!-- ── RESULTS ── -->
+<div class="section-rule" id="results-rule" style="display:none"><span>❧</span></div>
+<section id="results-section">
+  <div class="results-header">
+    <h2 id="results-title">检索结果</h2>
+    <span class="results-count" id="results-count"></span>
+  </div>
+  <div id="results-list"></div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  上海新闻档案馆 · SHANGHAI NEWS ARCHIVE · 档案保存中心<br>
+  所有文献仅供历史研究使用 · For Historical Research Purposes Only<br>
+  © 1872 – 1949 · ALL RIGHTS RESERVED · 版权所有
+</footer>
+
+<script>
+// ── DATABASE ──────────────────────────────────────────────────────────────────
+const ARCHIVE = [
+  {
+    id: "SHA-1930-0847",
+    category: "社会新闻",
+    date: "民国十九年 · 1930年9月14日",
+    year: "1930",
+    titleEn: "Mystery of the Vanished Balloon: Guild Chief and Wife Missing Over Moganshan",
+    titleZh: "热气球离奇失踪案——工会会长陆敷之夫妇莫干山上空杳无音讯",
+    excerpt: "本报讯：上海商业互助联合工会会长陆敷之，于本月十二日携妻杨晓娥乘法制热气球自莫干山东侧起飞，预计当日日落前抵达湖州。然至深夜，湖州方面确认两人未曾到达，当局已发出寻人通缉。目击起飞之见证人现已接受警方问询……",
+    tags: ["陆敷之", "杨晓娥", "热气球", "莫干山", "失踪"],
+    pages: 3,
+    source: "申报"
+  },
+  {
+    id: "SHA-1930-0851",
+    category: "调查报告",
+    date: "民国十九年 · 1930年9月20日",
+    year: "1930",
+    titleEn: "Exclusive: The Night the Witness Jumped — What Did He Know?",
+    titleZh: "独家追踪：见证人坠楼之谜——他究竟知道什么",
+    excerpt: "本报独家获悉，热气球失踪案唯一目击起飞者，于案发后第六日在其寓所三楼坠落身亡，警方初步认定为意外，然诸多细节令人生疑……外国警察私人日记中有关此案的记述，迄今仍列为涉密文件。",
+    tags: ["见证人", "坠楼", "外国警察", "调查"],
+    pages: 5,
+    source: "字林西报"
+  },
+  {
+    id: "SHA-1928-0312",
+    category: "商业要闻",
+    date: "民国十七年 · 1928年3月3日",
+    year: "1928",
+    titleEn: "Shanghai Commercial Mutual Aid Union: Annual Convention Convened at the Bund",
+    titleZh: "上海商业互助联合工会年会在外滩召开，陆敷之当选会长",
+    excerpt: "昨日，上海商业互助联合工会第十二届年会于外滩一号隆重举行，逾三百名业界代表出席。经无记名投票，陆敷之先生以绝对多数票当选新一届会长，任期两年。其施政纲领以「互助兴商、共谋繁荣」为宗旨……",
+    tags: ["商业互助联合工会", "陆敷之", "外滩", "年会"],
+    pages: 2,
+    source: "申报"
+  },
+  {
+    id: "SHA-1930-0863",
+    category: "航空要闻",
+    date: "民国十九年 · 1930年8月1日",
+    year: "1930",
+    titleEn: "French Ballon Manufacturer Demonstrates Flying Machine on Shanghai's Outskirts",
+    titleZh: "法国热气球公司在沪郊展示新式飞行器，吸引沪上名流观礼",
+    excerpt: "法兰西Société Aérostatique公司特派工程师携最新型号热气球抵沪，昨于徐汇郊野进行公开展示飞行。工会会长陆敷之先生到场参观，表示对此飞行器甚感兴趣，据悉已就购置事宜与该公司展开磋商……",
+    tags: ["热气球", "法国", "飞行", "陆敷之", "展示"],
+    pages: 2,
+    source: "新闻报"
+  },
+  {
+    id: "SHA-1931-0044",
+    category: "档案解密",
+    date: "民国二十年 · 1931年1月19日",
+    year: "1931",
+    titleEn: "Foreign Police Diary Reveals New Evidence in Balloon Disappearance Case",
+    titleZh: "外国警察日记披露热气球失踪案新证据，当局拒绝置评",
+    excerpt: "一份由公共租界巡捕房前警长Thomas H. Wyndham所著私人日记中，涉及陆敷之失踪案的数条记录被匿名人士寄至本报编辑部。日记显示，案发当晚曾有不明身份者向巡捕房举报异常……当局至今拒绝对此作出任何回应。",
+    tags: ["外国警察", "日记", "巡捕房", "陆敷之", "解密"],
+    pages: 4,
+    source: "大陆报"
+  },
+  {
+    id: "SHA-1930-0855",
+    category: "人物专访",
+    date: "民国十九年 · 1930年7月5日",
+    year: "1930",
+    titleEn: "Portrait of Madame Yang Xiaoe: The Woman Behind the Guild Chief",
+    titleZh: "人物专访：杨晓娥女士——工会会长背后的女性",
+    excerpt: "杨晓娥，字婉茵，苏州人，毕业于上海务本女塾。嫁与陆敷之已逾十载，外界鲜少知晓，她在丈夫商业版图背后发挥着举足轻重的作用。本报特约记者于外滩公馆独家专访，还原一位时代女性的完整面貌……",
+    tags: ["杨晓娥", "陆敷之", "人物", "女性"],
+    pages: 3,
+    source: "申报"
+  },
+  {
+    id: "SHA-1929-1101",
+    category: "社会新闻",
+    date: "民国十八年 · 1929年11月1日",
+    year: "1929",
+    titleEn: "Bund Celebrates National Day: Grand Illuminations Along the Waterfront",
+    titleZh: "外滩国庆盛况——华灯照耀黄浦江，万商汇聚庆升平",
+    excerpt: "昨夜，外滩沿线各租界同庆，华洋商号张灯结彩，黄浦江上轮船鸣笛示庆。上海商业互助联合工会主办商贸联欢晚宴，到场者逾五百人，陆敷之会长致辞称，沪上商界前景一片光明……",
+    tags: ["外滩", "国庆", "商业互助联合工会", "黄浦江"],
+    pages: 2,
+    source: "申报"
+  },
+  {
+    id: "SHA-1930-0901",
+    category: "警察纪事",
+    date: "民国十九年 · 1930年10月3日",
+    year: "1930",
+    titleEn: "Case File Closed? Authorities Declare Balloon Incident 'Inconclusive'",
+    titleZh: "当局宣布热气球案「证据不足，暂予存档」，家属强烈不满",
+    excerpt: "公共租界巡捕房昨日发出公告，正式宣布陆敷之夫妇失踪案「因现有证据不足以支持任何定论，暂予存档处理」。陆氏家族代理律师随即发表声明，表示将自行委托私家侦探继续调查，并保留向法院提起诉讼的权利……",
+    tags: ["陆敷之", "失踪", "巡捕房", "存档", "家属"],
+    pages: 3,
+    source: "字林西报"
+  }
+];
+
+const TOPICS = [
+  { label: "陆敷之", sub: "LU FUZHI" },
+  { label: "杨晓娥", sub: "YANG XIAOE" },
+  { label: "热气球", sub: "BALLOON" },
+  { label: "外滩", sub: "THE BUND" },
+  { label: "商业互助联合工会", sub: "GUILD" },
+  { label: "外国警察", sub: "FOREIGN POLICE" },
+  { label: "莫干山", sub: "MOGANSHAN" },
+  { label: "失踪案", sub: "DISAPPEARANCE" },
+];
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+(function init() {
+  const grid = document.getElementById('topic-grid');
+  TOPICS.forEach(t => {
+    const chip = document.createElement('button');
+    chip.className = 'topic-chip';
+    chip.innerHTML = `${t.label}<small>${t.sub}</small>`;
+    chip.onclick = () => {
+      document.getElementById('search-input').value = t.label;
+      doSearch();
+    };
+    grid.appendChild(chip);
+  });
+
+  document.getElementById('search-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+})();
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function doSearch() {
+  const raw = document.getElementById('search-input').value.trim();
+  if (!raw) return;
+
+  const q = raw.toLowerCase();
+  const hits = ARCHIVE.filter(rec => {
+    const haystack = [
+      rec.titleZh, rec.titleEn, rec.excerpt,
+      rec.category, rec.source, rec.date,
+      ...(rec.tags || [])
+    ].join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+
+  const section = document.getElementById('results-section');
+  const rule    = document.getElementById('results-rule');
+  const list    = document.getElementById('results-list');
+  const title   = document.getElementById('results-title');
+  const count   = document.getElementById('results-count');
+
+  list.innerHTML = '';
+  rule.style.display = '';
+
+  title.textContent = `「${raw}」的检索结果`;
+  count.textContent = hits.length > 0
+    ? `共找到 ${hits.length} 份档案文献`
+    : '— 无匹配记录 —';
+
+  if (hits.length === 0) {
+    list.innerHTML = `
+      <div class="no-results">
+        <span class="nr-icon">🗃</span>
+        <p>未找到与「${escHtml(raw)}」相关的档案记录</p>
+        <small>THIS RECORD MAY BE CLASSIFIED OR NOT YET DIGITIZED · 该档案可能仍属机密或尚未数字化</small>
+      </div>`;
+  } else {
+    hits.forEach((rec, i) => {
+      list.appendChild(buildCard(rec, raw, i));
+    });
+  }
+
+  section.classList.add('visible');
+  setTimeout(() => {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function buildCard(rec, query, idx) {
+  const card = document.createElement('div');
+  card.className = 'result-card';
+  card.style.animationDelay = `${idx * 0.08}s`;
+
+  const excerpt = highlight(rec.excerpt, query);
+  const tags = (rec.tags || []).map(t =>
+    `<span class="card-tag">${highlight(t, query)}</span>`
+  ).join('');
+
+  // fake filename
+  const filename = `SHA_${rec.year}_${rec.id.split('-')[2]}_archive.pdf`;
+
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="card-body">
+        <span class="card-category">${rec.category}</span>
+        <span class="card-date">${rec.date} · ${rec.source}</span>
+        <div class="card-title">${highlight(rec.titleEn, query)}</div>
+        <div class="card-title-zh">${highlight(rec.titleZh, query)}</div>
+        <p class="card-excerpt">${excerpt}</p>
+        <div class="card-meta-row">${tags}</div>
+      </div>
+      <div class="card-sidebar">
+        <div class="archive-stamp">
+          <span class="stamp-text">SHANGHAI<br>ARCHIVE</span>
+          <span class="stamp-year">${rec.year}</span>
+          <span class="stamp-text">已存档</span>
+        </div>
+        <div class="card-archive-id">
+          档案编号<br>${rec.id}<br>
+          共 ${rec.pages} 页
+        </div>
+        <a class="download-btn" href="#" onclick="downloadFile('${filename}', '${rec.titleZh}'); return false;" title="下载原始档案">
+          下载档案
+        </a>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function downloadFile(filename, title) {
+  // Create a minimal placeholder PDF-like text file for download
+  const content = `上海新闻档案馆 · SHANGHAI NEWS ARCHIVE
+${'='.repeat(50)}
+档案标题：${title}
+文件编号：${filename}
+${'='.repeat(50)}
+
+【档案说明】
+本文件为上海新闻档案馆数字化典藏文献。
+原始档案现存于上海市档案馆特藏部。
+
+This document is part of the Shanghai News Archive
+digital preservation project. The original physical
+document is held in the Special Collections of the
+Shanghai Municipal Archives.
+
+${'─'.repeat(50)}
+© 上海新闻档案馆 · Shanghai News Archive · 1872
+仅供历史研究使用 · For Research Purposes Only
+`;
+
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename.replace('.pdf', '.txt');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function highlight(text, query) {
+  if (!query) return escHtml(text);
+  const escaped = escHtml(text);
+  const q = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return escaped.replace(new RegExp(`(${q})`, 'gi'), '<mark>$1</mark>');
+}
+</script>
+</body>
+</html>
