@@ -594,6 +594,147 @@
     padding: 0 1px;
   }
 
+
+
+  /* ── PEGBOARD CLUE ── */
+  .pegboard-clue {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid var(--rule);
+    background: rgba(232,217,188,0.35);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+  }
+
+  .pegboard-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .pegboard-note {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--sepia);
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 2px solid var(--red);
+  }
+
+  .pegboard-scroll {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .pegboard-matrix {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    background: #fbf1df;
+    font-family: 'Noto Serif SC', serif;
+    color: var(--ink);
+  }
+
+  .pegboard-matrix th,
+  .pegboard-matrix td {
+    border: 1px solid var(--paper-aged);
+    padding: 12px 10px;
+    min-width: 96px;
+    height: 54px;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 13px;
+  }
+
+  .pegboard-matrix th {
+    font-weight: 600;
+    background: rgba(212,196,154,0.25);
+  }
+
+  .pegboard-matrix .year-cell {
+    font-family: 'Special Elite', cursive;
+    color: var(--sepia);
+    width: 74px;
+    min-width: 74px;
+  }
+
+  .pegboard-matrix .mark-cell {
+    font-family: 'Special Elite', cursive;
+    font-size: 20px;
+    color: var(--red);
+    font-weight: bold;
+  }
+
+  .pegboard-sequence {
+    margin-top: 12px;
+    font-family: 'Special Elite', 'Noto Serif SC', serif;
+    font-size: 11px;
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+    color: var(--faded);
+  }
+
+  /* ── FINAL KEY CLUE ── */
+  .key-clue {
+    margin-top: 18px;
+    padding: 18px 18px 16px;
+    border: 1px solid var(--rule);
+    background:
+      linear-gradient(135deg, rgba(250,244,230,0.92), rgba(232,217,188,0.45));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28);
+    position: relative;
+  }
+
+  .key-clue::before {
+    content: '3807';
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-family: 'Special Elite', cursive;
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    color: rgba(139,26,26,0.16);
+    transform: rotate(-4deg);
+    pointer-events: none;
+  }
+
+  .key-clue-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .key-clue-paper {
+    border-left: 2px solid var(--red);
+    padding: 2px 0 2px 14px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    line-height: 2;
+    color: var(--sepia);
+  }
+
+  .key-clue-paper strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .key-clue-footer {
+    margin-top: 12px;
+    font-family: 'Special Elite', 'Noto Serif SC', serif;
+    font-size: 10.5px;
+    line-height: 1.7;
+    letter-spacing: 0.08em;
+    color: var(--faded);
+  }
+
+
   /* responsive */
   @media (max-width: 600px) {
     .masthead, .search-section, .browse-section, #results-section { padding: 0 18px; }
@@ -644,7 +785,7 @@
     <button id="search-btn" onclick="doSearch()">查阅</button>
   </div>
   <p class="search-hint">
-    试试搜索：<strong>陆敷之</strong>、<strong>热气球</strong>、<strong>外滩</strong>、<strong>商业互助联合工会</strong>、<strong>杨晓娥</strong>
+    试试搜索：<strong>周怀民</strong>、<strong>冯友兰</strong>、<strong>热气球</strong>、<strong>育才中学</strong>、<strong>大桥大楼</strong>
   </p>
 </section>
 
@@ -680,11 +821,11 @@ const ARCHIVE = [
     category: "社会新闻",
     date: "民国十九年 · 1930年9月14日",
     year: "1930",
-    titleEn: "Mystery of the Vanished Balloon: Guild Chief and Wife Missing Over Moganshan",
-    titleZh: "热气球离奇失踪案——工会会长陆敷之夫妇莫干山上空杳无音讯",
-    excerpt: "本报讯：上海商业互助联合工会会长陆敷之，于本月十二日携妻杨晓娥乘法制热气球自莫干山东侧起飞，预计当日日落前抵达湖州。然至深夜，湖州方面确认两人未曾到达，当局已发出寻人通缉。目击起飞之见证人现已接受警方问询……",
-    tags: ["陆敷之", "杨晓娥", "热气球", "莫干山", "失踪"],
-    pages: 3,
+    titleEn: "Balloon Vanishes After Departure from the Bund",
+    titleZh: "热气球离奇失踪案——陆敷之夫妇自中山东一路升空后失联",
+    excerpt: "本报讯：上海商业互助联合工会会长陆敷之，与妻杨晓娥乘法制热气球自中山东一路附近起飞，预计当日日落前抵达湖州。现场观礼者中，有青年学生周怀民、冯友兰等人。二人事后被巡捕房询问，供称热气球升空时曾出现短暂偏航，但相关记录随后被归入密档。",
+    tags: ["周怀民", "冯友兰", "陆敷之", "杨晓娥", "热气球", "中山东一路", "外滩", "失踪"],
+    pages: 4,
     source: "申报"
   },
   {
@@ -692,12 +833,182 @@ const ARCHIVE = [
     category: "调查报告",
     date: "民国十九年 · 1930年9月20日",
     year: "1930",
-    titleEn: "Exclusive: The Night the Witness Jumped — What Did He Know?",
-    titleZh: "独家追踪：见证人坠楼之谜——他究竟知道什么",
-    excerpt: "本报独家获悉，热气球失踪案唯一目击起飞者，于案发后第六日在其寓所三楼坠落身亡，警方初步认定为意外，然诸多细节令人生疑……外国警察私人日记中有关此案的记述，迄今仍列为涉密文件。",
-    tags: ["见证人", "坠楼", "外国警察", "调查"],
-    pages: 5,
+    titleEn: "Witness List of the Balloon Incident",
+    titleZh: "热气球事件现场见证人名录：周怀民与冯友兰的证词摘录",
+    excerpt: "巡捕房备忘录显示，周怀民与冯友兰均在热气球起飞现场。二人为育才中学旧识，周怀民称自己受邀随同观礼，冯友兰则表示曾在起飞前看见一名陌生男子靠近缆绳。名录中另载陆敷之、杨晓娥、Thomas H. Wyndham等姓名，后续卷宗缺页严重。",
+    tags: ["周怀民", "冯友兰", "见证人", "热气球", "巡捕房", "Thomas H. Wyndham", "育才中学"],
+    pages: 6,
     source: "字林西报"
+  },
+  {
+    id: "SHA-1934-0216",
+    category: "学籍档案",
+    date: "民国二十三年 · 1934年6月18日",
+    year: "1934",
+    titleEn: "Yucai Middle School Student Register",
+    titleZh: "育才中学学生名册：周怀民与冯友兰同窗记录",
+    excerpt: "育才中学旧名册中可见周怀民、冯友兰二人的登记信息。二人同在校刊编辑组活动，常共同出入图书室。档案旁注写有「二人关系甚笃，常谈飞艇、新闻与上海掌故」等字样，后被人以红铅笔圈出。",
+    tags: ["育才中学", "周怀民", "冯友兰", "同学", "校刊", "上海掌故"],
+    pages: 2,
+    source: "校务档案"
+  },
+  {
+    id: "SHA-1922-0107",
+    category: "出生登记",
+    date: "民国十一年 · 1922年1月7日",
+    year: "1922",
+    titleEn: "Birth Registration at St. Mary's Hospital",
+    titleZh: "圣玛丽医院出生登记：冯友兰",
+    excerpt: "冯友兰，男，1922年生于上海圣玛丽医院。登记簿中其父职业一栏字迹漫漶，仅可辨「职员」二字。此记录是冯友兰生平时间线中最早的公开档案，也是后来追索其身份的起点。",
+    tags: ["冯友兰", "圣玛丽医院", "出生", "1922", "人物档案"],
+    pages: 1,
+    source: "医院登记簿"
+  },
+  {
+    id: "SHA-1930-0922",
+    category: "人物档案",
+    date: "档案汇编 · 1922—1962",
+    year: "1930",
+    titleEn: "Life File of Feng Youlan",
+    titleZh: "冯友兰生平简档：从圣玛丽医院到大桥大楼",
+    excerpt: "冯友兰，1922年生于圣玛丽医院；1934年入读育才中学，并与周怀民成为同学；1930年曾在中山东一路见证陆敷之夫妇热气球起飞；1951年前往黑龙江农场插队落户；1962年回到上海，此后数年间精神状态不稳，最终在大桥大楼坠楼身亡。其遗留物中多次出现周怀民姓名。",
+    tags: ["冯友兰", "周怀民", "圣玛丽医院", "育才中学", "中山东一路", "黑龙江农场", "大桥大楼", "坠楼", "生平"],
+    pages: 8,
+    source: "人物卷宗"
+  },
+  {
+    id: "SHA-1951-0719",
+    category: "户籍迁移",
+    date: "1951年7月19日",
+    year: "1951",
+    titleEn: "Relocation Record to Heilongjiang Farm",
+    titleZh: "冯友兰赴黑龙江农场插队落户登记",
+    excerpt: "1951年，冯友兰办理离沪登记，目的地为黑龙江某农场。同行记录显示，其随身物品包括旧皮箱一只、照片若干、笔记本两册。笔记本目录页有「热气球」「周」「陆」等字样，但正文页缺失。",
+    tags: ["冯友兰", "黑龙江农场", "插队落户", "周怀民", "热气球", "笔记本"],
+    pages: 3,
+    source: "户籍档案"
+  },
+  {
+    id: "SHA-1962-0412",
+    category: "警务简报",
+    date: "1962年4月12日",
+    year: "1962",
+    titleEn: "Fall at Daqiao Building",
+    titleZh: "大桥大楼坠楼案简报：冯友兰最后一次被记录",
+    excerpt: "冯友兰回沪后，曾多次出现在大桥大楼附近。警务简报称，其坠楼前曾向旧友寄出一封未署名信件，信内夹有一张外滩局部照片与一串代码。收信人栏残缺，但余字疑似「周怀民」。案件被以自杀结案，原始信件下落不明。",
+    tags: ["冯友兰", "大桥大楼", "坠楼", "周怀民", "外滩", "代码", "未署名信件"],
+    pages: 4,
+    source: "警务简报"
+  },
+
+
+  {
+    id: "SHA-1930-3807",
+    category: "封存便笺",
+    date: "未标日期 · 编号 3807",
+    year: "1930",
+    titleEn: "Sealed Note No. 3807: The Last Key",
+    titleZh: "3807号封存便笺：最后钥匙的存放处",
+    excerpt: "这是一张从热气球事件残卷中分出的便笺，纸面没有署名，只在右上角写有编号3807。便笺内容疑似指向某处现实地点，档案员将其归入「待实地核验」类目。",
+    clueHtml: `
+      <div class="key-clue">
+        <div class="key-clue-title">地点残笺 / Location Slip</div>
+        <div class="key-clue-paper">
+          <p>钥匙不在档案柜里，也不在箱中。</p>
+          <p>回到<strong>旧会所</strong>所在之处。如今它有新的名字，门前仍面向江风。</p>
+          <p>不必进入大厅。站在<strong>上海半岛酒店正门外</strong>，向右侧寻低矮灌木。</p>
+          <p><strong>钥匙藏在灌木丛中。</strong></p>
+        </div>
+        <div class="key-clue-footer">ARCHIVE NOTE: DO NOT ASK THE DOORMAN · RETURN ONLY WHEN THE BOX IS READY</div>
+      </div>
+    `,
+    hidden: true,
+    hiddenKeywords: ["3807"],
+    tags: ["3807", "钥匙", "上海半岛酒店", "正门右侧", "灌木丛"],
+    pages: 1,
+    source: "封存便笺"
+  },
+  {
+    id: "SHA-1962-FENG-PEG",
+    category: "未登记附件",
+    date: "1962年后 · 来源不明",
+    year: "1962",
+    titleEn: "Undigitized Attachment: Feng Youlan Pegboard Index",
+    titleZh: "未登记附件：冯友兰遗留的孔板索引表",
+    excerpt: "该附件据称来自冯友兰旧物，原件疑似夹在寄往周怀民的未署名信件中。纸面仅留下年份与地点的横纵表格，未见解释。档案员旁注：或与一只木箱内部的 Pegboard 结构有关。",
+    clueHtml: `
+      <div class="pegboard-clue">
+        <div class="pegboard-title">孔板线索 / Pegboard Index</div>
+        <p class="pegboard-note">附件仅保留年份与地点索引，表格内容为空。档案员未能确认其用途，仅在页角留下批注：需与实体木箱内部结构交叉核对。</p>
+        <div class="pegboard-scroll">
+          <table class="pegboard-matrix" aria-label="冯友兰 Pegboard 线索表">
+            <thead>
+              <tr>
+                <th></th>
+                <th>育才中学</th>
+                <th>圣玛丽医院</th>
+                <th>大桥大楼</th>
+                <th>中山东一路</th>
+                <th>基督教青年会</th>
+                <th>黑龙江农场</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="year-cell">1922</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="year-cell">1934</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="year-cell">1930</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="year-cell">1951</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="year-cell">1962</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `,
+    hidden: true,
+    hiddenKeywords: ["冯1962"],
+    tags: ["冯1962"],
+    pages: 1,
+    source: "残缺附件"
   },
   {
     id: "SHA-1928-0312",
@@ -706,8 +1017,8 @@ const ARCHIVE = [
     year: "1928",
     titleEn: "Shanghai Commercial Mutual Aid Union: Annual Convention Convened at the Bund",
     titleZh: "上海商业互助联合工会年会在外滩召开，陆敷之当选会长",
-    excerpt: "昨日，上海商业互助联合工会第十二届年会于外滩一号隆重举行，逾三百名业界代表出席。经无记名投票，陆敷之先生以绝对多数票当选新一届会长，任期两年。其施政纲领以「互助兴商、共谋繁荣」为宗旨……",
-    tags: ["商业互助联合工会", "陆敷之", "外滩", "年会"],
+    excerpt: "昨日，上海商业互助联合工会第十二届年会于外滩一号隆重举行，逾三百名业界代表出席。经无记名投票，陆敷之先生以绝对多数票当选新一届会长。后续热气球事件中，陆敷之及其妻杨晓娥成为失踪案核心人物。",
+    tags: ["商业互助联合工会", "陆敷之", "杨晓娥", "外滩", "年会", "热气球"],
     pages: 2,
     source: "申报"
   },
@@ -716,10 +1027,10 @@ const ARCHIVE = [
     category: "航空要闻",
     date: "民国十九年 · 1930年8月1日",
     year: "1930",
-    titleEn: "French Ballon Manufacturer Demonstrates Flying Machine on Shanghai's Outskirts",
+    titleEn: "French Balloon Manufacturer Demonstrates Flying Machine on Shanghai's Outskirts",
     titleZh: "法国热气球公司在沪郊展示新式飞行器，吸引沪上名流观礼",
-    excerpt: "法兰西Société Aérostatique公司特派工程师携最新型号热气球抵沪，昨于徐汇郊野进行公开展示飞行。工会会长陆敷之先生到场参观，表示对此飞行器甚感兴趣，据悉已就购置事宜与该公司展开磋商……",
-    tags: ["热气球", "法国", "飞行", "陆敷之", "展示"],
+    excerpt: "法兰西Société Aérostatique公司特派工程师携最新型号热气球抵沪，昨于徐汇郊野进行公开展示飞行。工会会长陆敷之到场参观，并邀请杨晓娥、周怀民等人于后续试飞时观礼。",
+    tags: ["热气球", "法国", "飞行", "陆敷之", "杨晓娥", "周怀民", "展示"],
     pages: 2,
     source: "新闻报"
   },
@@ -730,8 +1041,8 @@ const ARCHIVE = [
     year: "1931",
     titleEn: "Foreign Police Diary Reveals New Evidence in Balloon Disappearance Case",
     titleZh: "外国警察日记披露热气球失踪案新证据，当局拒绝置评",
-    excerpt: "一份由公共租界巡捕房前警长Thomas H. Wyndham所著私人日记中，涉及陆敷之失踪案的数条记录被匿名人士寄至本报编辑部。日记显示，案发当晚曾有不明身份者向巡捕房举报异常……当局至今拒绝对此作出任何回应。",
-    tags: ["外国警察", "日记", "巡捕房", "陆敷之", "解密"],
+    excerpt: "一份由公共租界巡捕房前警长Thomas H. Wyndham所著私人日记中，涉及陆敷之失踪案的数条记录被匿名人士寄至本报编辑部。日记中出现周怀民与冯友兰二名青年证人的缩写，但关键段落被墨水涂黑。",
+    tags: ["外国警察", "日记", "巡捕房", "陆敷之", "周怀民", "冯友兰", "解密"],
     pages: 4,
     source: "大陆报"
   },
@@ -742,8 +1053,8 @@ const ARCHIVE = [
     year: "1930",
     titleEn: "Portrait of Madame Yang Xiaoe: The Woman Behind the Guild Chief",
     titleZh: "人物专访：杨晓娥女士——工会会长背后的女性",
-    excerpt: "杨晓娥，字婉茵，苏州人，毕业于上海务本女塾。嫁与陆敷之已逾十载，外界鲜少知晓，她在丈夫商业版图背后发挥着举足轻重的作用。本报特约记者于外滩公馆独家专访，还原一位时代女性的完整面貌……",
-    tags: ["杨晓娥", "陆敷之", "人物", "女性"],
+    excerpt: "杨晓娥，字婉茵，苏州人，毕业于上海务本女塾。嫁与陆敷之已逾十载，外界鲜少知晓，她在丈夫商业版图背后发挥着举足轻重的作用。她后来随陆敷之乘热气球失踪，成为案中另一位无法被确认命运的人。",
+    tags: ["杨晓娥", "陆敷之", "人物", "女性", "热气球", "失踪"],
     pages: 3,
     source: "申报"
   },
@@ -754,8 +1065,8 @@ const ARCHIVE = [
     year: "1929",
     titleEn: "Bund Celebrates National Day: Grand Illuminations Along the Waterfront",
     titleZh: "外滩国庆盛况——华灯照耀黄浦江，万商汇聚庆升平",
-    excerpt: "昨夜，外滩沿线各租界同庆，华洋商号张灯结彩，黄浦江上轮船鸣笛示庆。上海商业互助联合工会主办商贸联欢晚宴，到场者逾五百人，陆敷之会长致辞称，沪上商界前景一片光明……",
-    tags: ["外滩", "国庆", "商业互助联合工会", "黄浦江"],
+    excerpt: "昨夜，外滩沿线各租界同庆，华洋商号张灯结彩，黄浦江上轮船鸣笛示庆。上海商业互助联合工会主办商贸联欢晚宴，到场者逾五百人，陆敷之会长致辞称，沪上商界前景一片光明。",
+    tags: ["外滩", "国庆", "商业互助联合工会", "陆敷之", "黄浦江"],
     pages: 2,
     source: "申报"
   },
@@ -766,21 +1077,25 @@ const ARCHIVE = [
     year: "1930",
     titleEn: "Case File Closed? Authorities Declare Balloon Incident 'Inconclusive'",
     titleZh: "当局宣布热气球案「证据不足，暂予存档」，家属强烈不满",
-    excerpt: "公共租界巡捕房昨日发出公告，正式宣布陆敷之夫妇失踪案「因现有证据不足以支持任何定论，暂予存档处理」。陆氏家族代理律师随即发表声明，表示将自行委托私家侦探继续调查，并保留向法院提起诉讼的权利……",
-    tags: ["陆敷之", "失踪", "巡捕房", "存档", "家属"],
+    excerpt: "公共租界巡捕房昨日发出公告，正式宣布陆敷之夫妇失踪案「因现有证据不足以支持任何定论，暂予存档处理」。周怀民与冯友兰等证人记录未随公告公开，陆氏家族代理律师表示将继续追查。",
+    tags: ["陆敷之", "杨晓娥", "周怀民", "冯友兰", "失踪", "巡捕房", "存档", "家属"],
     pages: 3,
     source: "字林西报"
   }
 ];
 
 const TOPICS = [
+  { label: "周怀民", sub: "ZHOU HUAIMIN" },
+  { label: "冯友兰", sub: "FENG YOULAN" },
+  { label: "热气球", sub: "BALLOON" },
   { label: "陆敷之", sub: "LU FUZHI" },
   { label: "杨晓娥", sub: "YANG XIAOE" },
-  { label: "热气球", sub: "BALLOON" },
-  { label: "外滩", sub: "THE BUND" },
-  { label: "商业互助联合工会", sub: "GUILD" },
+  { label: "育才中学", sub: "Yucai" },
+  { label: "中山东一路", sub: "THE BUND" },
+  { label: "黑龙江农场", sub: "FARM" },
+  { label: "大桥大楼", sub: "DAQIAO" },
   { label: "外国警察", sub: "FOREIGN POLICE" },
-  { label: "莫干山", sub: "MOGANSHAN" },
+  { label: "商业互助联合工会", sub: "GUILD" },
   { label: "失踪案", sub: "DISAPPEARANCE" },
 ];
 
@@ -809,7 +1124,14 @@ function doSearch() {
   if (!raw) return;
 
   const q = raw.toLowerCase();
+  const normalizedQ = raw.replace(/\s+/g, '').toLowerCase();
   const hits = ARCHIVE.filter(rec => {
+    if (rec.hidden) {
+      return (rec.hiddenKeywords || []).some(k =>
+        normalizedQ === k.replace(/\s+/g, '').toLowerCase()
+      );
+    }
+
     const haystack = [
       rec.titleZh, rec.titleEn, rec.excerpt,
       rec.category, rec.source, rec.date,
@@ -872,6 +1194,7 @@ function buildCard(rec, query, idx) {
         <div class="card-title">${highlight(rec.titleEn, query)}</div>
         <div class="card-title-zh">${highlight(rec.titleZh, query)}</div>
         <p class="card-excerpt">${excerpt}</p>
+        ${rec.clueHtml ? rec.clueHtml : ''}
         <div class="card-meta-row">${tags}</div>
       </div>
       <div class="card-sidebar">
